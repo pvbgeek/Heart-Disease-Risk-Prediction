@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Heart Disease Prediction</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <style>
+      html {
+      min-height: 100%;
+      }
+      body{
+        min-height: 100%;
+        background: white;';
+      }
+      body, div, form, input, select, p { 
+      padding: 0;
+      margin: 0;
+      outline: none;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 14px;
+      color: darkgoldenrod;
+      }
+      h1 {
+      color: 'black;';
+      margin: 0;
+      font-weight: 600;
+      text-align: center;
+      }
+      h3 { 
+      margin: 12px 0;
+      color: darkgoldenrod;
+      }
+      .main-block {
+      justify-content: center;
+      align-items: center;
+      }
+      img {
+        padding-right: 0px;
+        padding-top: 190px;
+        width: 37%;
+        float: right;
+      }
+      form {
+      background-color: 'white;';
+      width: 900px;
+      height: 900px;
+      margin: 0;
+      padding: 30px;
+      }
+      fieldset {
+      border: none;
+      border-top: 1px solid #ffd700;
+      }
+      .account-details, .personal-details {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      }
+      .account-details >div, .personal-details >div >div {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      }
+      .account-details >div{
+      width: 100%;
+      }
+      .personal-details >div >div, input, label {
+      width: 100%;
+      }
+      label {
+      color: black;
+      padding: 0 7px;
+      text-align: right;
+      vertical-align: middle;
+      }
+      input {
+      padding: 5px;
+      vertical-align: middle;
+      }
+      .checkbox {
+      margin-bottom: 10px;
+      }
+      select, .children, .gender, .bdate-block {
+      width: calc(100% + 26px);
+      padding: 5px 0;
+      }
+      select {
+      background: transparent;
+      }
+      #smoking, #general_health, #alcohol, #mental_health, #physical_health, #sleep_time{
+        width: 20%;
+      }
+      #physical_activity, #diff_walking, #stroke, #diabetic, #asthma, #skin_cancer, #kidney_disease{
+        width: 20%;
+      }
+      button {
+      width: 100%;
+      padding: 10px 0;
+      margin: 10px auto;
+      border-radius: 5px; 
+      border: none;
+      background: #ffe866;  
+      font-size: 14px;
+      font-weight: 600;
+      color: #black;
+      }
+      button:hover {
+      background: #ffd700;
+      }
+      @media (min-width: 568px) {
+      .account-details >div{
+      width: 50%;
+      }
+      .personal-details >div {
+      width: 100%;
+      }
+      label {
+      width: 40%;
+      }
+      input {
+      width: 60%;
+      }
+      select, .children, .gender, .bdate-block {
+      width: calc(60% + 16px);
+      }
+      }
+    </style>
+  </head>
+  <body>
+    <img src="{{url_for('static', filename='doctor_2.png')}}">
+    <div class="main-block">
+    <form action="{{url_for('get_prediction')}}" >
+      <h1>Hearth Disease Prediction</h1>
+      <fieldset>
+        <legend>
+          <h3>Personal Informations</h3>
+        </legend>
+        <div  class="account-details">
+          <div><label>Name </label><input type="text" name="name" required></div>
+          <div><label>Sex </label><select id="sex" name="sex">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            </select>
+          </div>
+          <div><label>Age </label>
+            <select id="age" name="age">
+            <option value="18-24">18-24</option>
+            <option value="25-29">25-29</option>
+            <option value="30-34">30-34</option>
+            <option value="35-39">35-39</option>
+            <option value="40-44">40-44</option>
+            <option value="45-49">45-49</option>
+            <option value="50-54">50-54</option>
+            <option value="55-59">55-59</option>
+            <option value="60-64">60-64</option>
+            <option value="65-69">65-69</option>
+            <option value="70-74">70-74</option>
+            <option value="75-79">75-79</option>
+            <option value="80 or older">80+</option>
+            </select>
+          </div>
+          <div><label>Race </label>
+            <select id="race" name="race">
+            <option value="Asian">Asian</option>
+            <option value="American Indian/Alaskan Native">American Indian/Alaskan Native</option>
+            <option value="Black">Black</option>
+            <option value="Hispanic">Hispanic</option>
+            <option value="White">White</option>
+            <option value="Other">Other</option>
+            </select>
+          </div>
+          <div><label>Height </label>
+            <input type="number" id="height" name="height" placeholder="cm" min="0" max="225" required>
+          </div>
+          <div><label>Weight </label>
+            <input type="number" id="weight" name="weight" placeholder="kg" min="0" max="225" required>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>
+          <h3>General Information</h3>
+        </legend>
+        <div  class="personal-details">
+          <div>
+            <div><label>Have you smoked at least 100 cigarettes in your entire life?</label>
+              <select id="smoking" name="smoking">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+              </select>
+            </div>
+            <div><label>Heavy alcohol drinkers (Male: >14 drinks & Female: >7 drinks per week)</label>
+              <select id="alcohol" name="alcohol">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+              </select>
+            </div>
+            <div><label>Would you say that in general your health is..</label>
+              <select id="general_health" name="general_health">
+              <option value="Excellent">Excellent</option>
+              <option value="Very good">Very Good</option>
+              <option value="Good">Good</option>
+              <option value="Fair">Fair</option>
+              <option value="Poor">Poor</option>
+              </select>
+            </div>
+            <div><label>On average, how many hours of sleep do you get in a 24-hour period? </label>
+              <input type="number" id="sleep_time" name="sleep_time" min="0" max="24" required>
+            </div>
+            <div><label>How many days during the past 30 days was your mental health not good? </label>
+              <input type="number" id="mental_health" name="mental_health" min="0" max="30" required>
+            </div>
+            <div><label>How many days during the past 30 days was your physical health not good? </label>
+              <input type="number" id="physical_health" name="physical_health" min="0" max="30" required>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>
+          <h3>Health Information</h3>
+        </legend>
+        <div  class="personal-details">
+          <div>
+            <div><label>Did you do exercise during the past 30 days other than their regular job?</label>
+              <select id="physical_activity" name="physical_activity">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+              </select>
+            </div>
+            <div><label>Do you have serious difficulty walking or climbing stairs?</label>
+              <select id="diff_walking" name="diff_walking">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+              </select>
+            </div>
+            <div><label>Have you ever had a stroke?</label>
+              <select id="stroke" name="stroke">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+              </select>
+            </div>
+            <div><label>Have you ever had a diabetes?</label>
+              <select id="diabetic" name="diabetic">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+              </select>
+            </div>
+            <div><label>Have you ever had an asthma?</label>
+              <select id="asthma" name="asthma">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+              </select>
+            </div>
+            <div><label>Have you ever had a skin cancer?</label>
+              <select id="skin_cancer" name="skin_cancer">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+              </select>
+            </div>
+            <div><label>Have you ever had a kidney disease?</label>
+              <select id="kidney_disease" name="kidney_disease">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      <button type="submit" href="/">Submit</button>
+      </fieldset>
+    </form>
+    </div> 
+  </body>
+</html>
